@@ -2,11 +2,16 @@ package com.cs.sbmp.domain;
 
 import java.math.BigDecimal;
 
+import static com.cs.sbmp.domain.OrderType.BUY;
 import static com.cs.sbmp.domain.OrderType.SELL;
 
 public class CreateOrder {
     public static OrderBuilder sell() {
         return new OrderBuilder().orderType(SELL);
+    }
+
+    public static OrderBuilder buy() {
+        return new OrderBuilder().orderType(BUY);
     }
 
     static class OrderBuilder {
@@ -40,7 +45,7 @@ public class CreateOrder {
                 return new SellOrder(userId, quantity, price);
             }
 
-            return null;
+            return new BuyOrder(userId, quantity, price);
         }
     }
 }
