@@ -68,12 +68,12 @@ public class BuyOrderTest extends SbmpTest {
     @Test
     public void handleAddingTwoBuyOrdersWithDifferentUnits_twoBuyOrdersWithDifferentUnits_emptyReturned() {
         BuyOrder order1 = (BuyOrder) buy()
-                .quantity(new BigDecimal(10), Kilogram)
+                .quantitySpec("10 kg")
                 .price(GBP, new BigDecimal(245))
                 .createOrder();
 
         BuyOrder order2 = (BuyOrder) buy()
-                .quantity(new BigDecimal(15), Litre)
+                .quantitySpec("15 l")
                 .price(GBP, new BigDecimal(245))
                 .createOrder();
 
@@ -91,12 +91,12 @@ public class BuyOrderTest extends SbmpTest {
     @Test
     public void handleAddingTwoDifferentTypesOfOrders_twoDifferentTypesOfOrders_emptyReturned() {
         BuyOrder order1 = (BuyOrder) buy()
-                .quantity(new BigDecimal(10), Kilogram)
+                .quantitySpec("10 kg")
                 .price(GBP, new BigDecimal(245))
                 .createOrder();
 
         SellOrder order2 = (SellOrder) sell()
-                .quantity(new BigDecimal(15), Kilogram)
+                .quantitySpec("15 kg")
                 .price(GBP, new BigDecimal(245))
                 .createOrder();
 

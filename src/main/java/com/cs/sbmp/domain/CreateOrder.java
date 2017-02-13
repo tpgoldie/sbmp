@@ -1,9 +1,11 @@
 package com.cs.sbmp.domain;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import static com.cs.sbmp.domain.OrderType.BUY;
 import static com.cs.sbmp.domain.OrderType.SELL;
+import static com.cs.sbmp.domain.Unit.findBySymbol;
 
 public class CreateOrder {
     public static OrderBuilder sell() {
@@ -23,6 +25,18 @@ public class CreateOrder {
         public OrderBuilder userId(String userId) {
             this.userId = userId;
             return this;
+        }
+
+        public OrderBuilder quantitySpec(String value) {
+            String[] tokens = value.split(" ");
+
+            if (tokens.length != 2) { throw new RuntimeException("Incorrect data entered for quantity"); }
+
+            Optional<Unit> unit = findBySymbol(tokens[1].trim());
+
+            if (!unit.isPresent()) { throw new RuntimeException("Incorrect data entered for quantity"); }
+
+            return quantity(new BigDecimal(tokens[0].trim()), unit.get());
         }
 
         public OrderBuilder quantity(BigDecimal amount, Unit unit) {

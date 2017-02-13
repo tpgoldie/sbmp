@@ -22,12 +22,12 @@ public class SellOrderTest extends SbmpTest {
     @Test
     public void addTwoSellOrdersWithSamePrice_twoSellOrders_newCompositeSellOrderCreated() {
         SellOrder order1 = (SellOrder) sell()
-                .quantity(new BigDecimal(10), Kilogram)
+                .quantitySpec("10 kg")
                 .price(GBP, new BigDecimal(245))
                 .createOrder();
 
         SellOrder order2 = (SellOrder) sell()
-                .quantity(new BigDecimal(15), Kilogram)
+                .quantitySpec("15 kg")
                 .price(GBP, new BigDecimal(245))
                 .createOrder();
 
@@ -45,12 +45,12 @@ public class SellOrderTest extends SbmpTest {
     @Test
     public void handleAddingTwoSellOrdersWithDifferentPrices_twoSellOrdersWithDifferentPrices_emptyReturned() {
         SellOrder order1 = (SellOrder) sell()
-                .quantity(new BigDecimal(10), Kilogram)
+                .quantitySpec("10 kg")
                 .price(GBP, new BigDecimal(245))
                 .createOrder();
 
         SellOrder order2 = (SellOrder) sell()
-                .quantity(new BigDecimal(15), Kilogram)
+                .quantitySpec("15 kg")
                 .price(GBP, new BigDecimal(145))
                 .createOrder();
 
@@ -68,12 +68,12 @@ public class SellOrderTest extends SbmpTest {
     @Test
     public void handleAddingTwoSellOrdersWithDifferentUnits_twoSellOrdersWithDifferentUnits_emptyReturned() {
         SellOrder order1 = (SellOrder) sell()
-                .quantity(new BigDecimal(10), Kilogram)
+                .quantitySpec("10 kg")
                 .price(GBP, new BigDecimal(245))
                 .createOrder();
 
         SellOrder order2 = (SellOrder) sell()
-                .quantity(new BigDecimal(15), Litre)
+                .quantitySpec("15 l")
                 .price(GBP, new BigDecimal(245))
                 .createOrder();
 
@@ -81,25 +81,22 @@ public class SellOrderTest extends SbmpTest {
 
         assertThat(actual, is(empty()));
 
-        Money expectedPrice = new Money(GBP, new BigDecimal(245));
+        asList(order1, order2).forEach(o -> assertPrice(o, GBP, 245));
 
+        assertQuantity(order1, 10, Kilogram);
 
-        assertThat(order1, hasProperty("quantity", is(new Quantity(new BigDecimal(10), Kilogram))));
-        assertThat(order1, hasProperty("price", is(new Money(GBP, new BigDecimal(245)))));
-
-        assertThat(order2, hasProperty("quantity", is(new Quantity(new BigDecimal(15), Litre))));
-        assertThat(order2, hasProperty("price", is(expectedPrice)));
+        assertQuantity(order2, 15, Litre);
     }
 
     @Test
     public void handleAddingTwoDifferentTypesOfOrders_twoDifferentTypesOfOrders_emptyReturned() {
         BuyOrder order1 = (BuyOrder) buy()
-                .quantity(new BigDecimal(10), Kilogram)
+                .quantitySpec("10 kg")
                 .price(GBP, new BigDecimal(245))
                 .createOrder();
 
         SellOrder order2 = (SellOrder) sell()
-                .quantity(new BigDecimal(15), Kilogram)
+                .quantitySpec("15 kg")
                 .price(GBP, new BigDecimal(245))
                 .createOrder();
 

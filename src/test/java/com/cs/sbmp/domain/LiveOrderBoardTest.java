@@ -174,25 +174,25 @@ public class LiveOrderBoardTest extends SbmpTest {
     public void examplesTest() {
         Order order1 = sell()
                 .userId("user1")
-                .quantity(new BigDecimal(3.5), Kilogram)
+                .quantitySpec("3.5 kg")
                 .price(GBP, new BigDecimal(306))
                 .createOrder();
 
         Order order2 = sell()
                 .userId("user2")
-                .quantity(new BigDecimal(1.2), Kilogram)
+                .quantitySpec("1.2 kg")
                 .price(GBP, new BigDecimal(310))
                 .createOrder();
 
         Order order3 = sell()
                 .userId("user3")
-                .quantity(new BigDecimal(1.5), Kilogram)
+                .quantitySpec("1.5 kg")
                 .price(GBP, new BigDecimal(307))
                 .createOrder();
 
         Order order4 = sell()
                 .userId("user4")
-                .quantity(new BigDecimal(2.0), Kilogram)
+                .quantitySpec("2.0 kg")
                 .price(GBP, new BigDecimal(306))
                 .createOrder();
 
@@ -203,7 +203,7 @@ public class LiveOrderBoardTest extends SbmpTest {
         assertThat(actualList.size(), is(3));
 
         Order order5 = sell()
-                .quantity(new BigDecimal(5.5), Kilogram)
+                .quantitySpec("5.5 kg")
                 .price(GBP, new BigDecimal(306))
                 .createOrder();
 
