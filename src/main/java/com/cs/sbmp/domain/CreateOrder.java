@@ -15,7 +15,7 @@ public class CreateOrder {
     }
 
     static class OrderBuilder {
-        private String userId;
+        private String userId = "";
         private Quantity quantity;
         private Money price;
         private OrderType orderType;
@@ -35,7 +35,7 @@ public class CreateOrder {
             return this;
         }
 
-        public OrderBuilder orderType(OrderType orderType) {
+        private OrderBuilder orderType(OrderType orderType) {
             this.orderType = orderType;
             return this;
         }

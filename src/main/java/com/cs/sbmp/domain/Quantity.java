@@ -1,6 +1,12 @@
 package com.cs.sbmp.domain;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+
 import java.math.BigDecimal;
+import java.util.Optional;
+
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
 
 public final class Quantity {
     private final BigDecimal value;
@@ -19,16 +25,23 @@ public final class Quantity {
         return unit;
     }
 
+    public Optional<Quantity> add(Quantity that) {
+        if (!getUnit().equals(that.getUnit())) { return empty(); }
+
+        return of(new Quantity(getValue().add(that.getValue()), getUnit()));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Quantity)) return false;
 
         Quantity that = (Quantity) o;
 
-        if (!getValue().equals(that.getValue())) return false;
-        return getUnit() == that.getUnit();
-
+        return new EqualsBuilder()
+                .append(that.getValue(), this.getValue())
+                .append(that.getUnit(), this.getUnit())
+                .isEquals();
     }
 
     @Override

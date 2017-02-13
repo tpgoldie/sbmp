@@ -1,8 +1,10 @@
 package com.cs.sbmp.domain;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+
 import java.math.BigDecimal;
 
-public final class Money {
+public final class Money implements Comparable<Money> {
     private final Currency currency;
     private final BigDecimal amount;
 
@@ -26,9 +28,10 @@ public final class Money {
 
         Money that = (Money) o;
 
-        if (!getCurrency().equals(that.getCurrency())) return false;
-        return getAmount().equals(that.getAmount());
-
+        return new EqualsBuilder()
+                .append(that.getCurrency(), this.getCurrency())
+                .append(that.getAmount(), this.getAmount())
+                .isEquals();
     }
 
     @Override
@@ -39,5 +42,12 @@ public final class Money {
     }
 
     @Override
-    public String toString() { return String.format("%.2f %s", amount, currency.getSymbol()); }
+    public String toString() { return String.format("%s%.2f", currency.getSymbol(), amount); }
+
+    @Override
+    public int compareTo(Money that) {
+        if (!that.getCurrency().equals(getCurrency())) { return that.getCurrency().compareTo(getCurrency()); }
+
+        return that.getAmount().compareTo(getAmount());
+    }
 }

@@ -1,7 +1,7 @@
 package com.cs.sbmp.domain;
 
 public enum Unit {
-    Kilogram("kg");
+    Kilogram("kg"), Litre("l");
 
     private final String symbol;
 

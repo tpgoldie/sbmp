@@ -1,6 +1,8 @@
 package com.cs.sbmp.domain;
 
-public final class Currency {
+import org.apache.commons.lang3.builder.EqualsBuilder;
+
+public final class Currency implements Comparable<Currency> {
     public static Currency GBP = new Currency("Pound Sterling", "GBP", "£");
     private final String description;
     private final String isoCode;
@@ -31,11 +33,11 @@ public final class Currency {
 
         Currency that = (Currency) o;
 
-        if (!that.getDescription().equals(getDescription())) { return false; }
-
-        if (!that.getIsoCode().equals(getIsoCode())) { return false; }
-
-        return that.getSymbol().equals(getSymbol());
+        return new EqualsBuilder()
+                .append(that.getIsoCode(), this.getIsoCode())
+                .append(that.getSymbol(), this.getSymbol())
+                .append(that.getDescription(), this.getDescription())
+                .isEquals();
     }
 
     @Override
@@ -48,4 +50,9 @@ public final class Currency {
 
     @Override
     public String toString() { return isoCode; }
+
+    @Override
+    public int compareTo(Currency that) {
+        return this.getIsoCode().compareTo(that.getIsoCode());
+    }
 }
