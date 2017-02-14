@@ -23,12 +23,12 @@ public class SellOrderTest extends SbmpTest {
     public void addTwoSellOrdersWithSamePrice_twoSellOrders_newCompositeSellOrderCreated() {
         SellOrder order1 = (SellOrder) sell()
                 .quantitySpec("10 kg")
-                .price(GBP, new BigDecimal(245))
+                .priceSpec("£245")
                 .createOrder();
 
         SellOrder order2 = (SellOrder) sell()
                 .quantitySpec("15 kg")
-                .price(GBP, new BigDecimal(245))
+                .priceSpec("£245")
                 .createOrder();
 
         SellOrder actual = (SellOrder) order1.add(order2).get();
@@ -46,12 +46,12 @@ public class SellOrderTest extends SbmpTest {
     public void handleAddingTwoSellOrdersWithDifferentPrices_twoSellOrdersWithDifferentPrices_emptyReturned() {
         SellOrder order1 = (SellOrder) sell()
                 .quantitySpec("10 kg")
-                .price(GBP, new BigDecimal(245))
+                .priceSpec("£245")
                 .createOrder();
 
         SellOrder order2 = (SellOrder) sell()
                 .quantitySpec("15 kg")
-                .price(GBP, new BigDecimal(145))
+                .priceSpec("£145")
                 .createOrder();
 
         Optional<Order> actual = order1.add(order2);
@@ -69,12 +69,12 @@ public class SellOrderTest extends SbmpTest {
     public void handleAddingTwoSellOrdersWithDifferentUnits_twoSellOrdersWithDifferentUnits_emptyReturned() {
         SellOrder order1 = (SellOrder) sell()
                 .quantitySpec("10 kg")
-                .price(GBP, new BigDecimal(245))
+                .priceSpec("£245")
                 .createOrder();
 
         SellOrder order2 = (SellOrder) sell()
                 .quantitySpec("15 l")
-                .price(GBP, new BigDecimal(245))
+                .priceSpec("£245")
                 .createOrder();
 
         Optional<Order> actual = order1.add(order2);
@@ -92,12 +92,12 @@ public class SellOrderTest extends SbmpTest {
     public void handleAddingTwoDifferentTypesOfOrders_twoDifferentTypesOfOrders_emptyReturned() {
         BuyOrder order1 = (BuyOrder) buy()
                 .quantitySpec("10 kg")
-                .price(GBP, new BigDecimal(245))
+                .priceSpec("£245")
                 .createOrder();
 
         SellOrder order2 = (SellOrder) sell()
                 .quantitySpec("15 kg")
-                .price(GBP, new BigDecimal(245))
+                .priceSpec("£245")
                 .createOrder();
 
         Optional<Order> actual = order1.add(order2);

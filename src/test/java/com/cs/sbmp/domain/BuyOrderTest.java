@@ -45,13 +45,13 @@ public class BuyOrderTest extends SbmpTest {
     @Test
     public void handleAddingTwoBuyOrdersWithDifferentPrices_twoBuyOrdersWithDifferentPrices_emptyReturned() {
         BuyOrder order1 = (BuyOrder) buy()
-                .quantity(new BigDecimal(10), Kilogram)
-                .price(GBP, new BigDecimal(245))
+                .quantitySpec("10 kg")
+                .priceSpec("£245")
                 .createOrder();
 
         BuyOrder order2 = (BuyOrder) buy()
-                .quantity(new BigDecimal(15), Kilogram)
-                .price(GBP, new BigDecimal(145))
+                .quantitySpec("15 kg")
+                .priceSpec("£145")
                 .createOrder();
 
         Optional<Order> actual = order1.add(order2);
@@ -69,12 +69,12 @@ public class BuyOrderTest extends SbmpTest {
     public void handleAddingTwoBuyOrdersWithDifferentUnits_twoBuyOrdersWithDifferentUnits_emptyReturned() {
         BuyOrder order1 = (BuyOrder) buy()
                 .quantitySpec("10 kg")
-                .price(GBP, new BigDecimal(245))
+                .priceSpec("£245")
                 .createOrder();
 
         BuyOrder order2 = (BuyOrder) buy()
                 .quantitySpec("15 l")
-                .price(GBP, new BigDecimal(245))
+                .priceSpec("£245")
                 .createOrder();
 
         Optional<Order> actual = order1.add(order2);
@@ -92,12 +92,12 @@ public class BuyOrderTest extends SbmpTest {
     public void handleAddingTwoDifferentTypesOfOrders_twoDifferentTypesOfOrders_emptyReturned() {
         BuyOrder order1 = (BuyOrder) buy()
                 .quantitySpec("10 kg")
-                .price(GBP, new BigDecimal(245))
+                .priceSpec("£245")
                 .createOrder();
 
         SellOrder order2 = (SellOrder) sell()
                 .quantitySpec("15 kg")
-                .price(GBP, new BigDecimal(245))
+                .priceSpec("£245")
                 .createOrder();
 
         Optional<Order> actual = order1.add(order2);
@@ -117,14 +117,14 @@ public class BuyOrderTest extends SbmpTest {
     public void equalOrders_twoEqualOrders_ordersAreEqual() {
         BuyOrder order1 = (BuyOrder) buy()
                 .userId("user-1")
-                .quantity(new BigDecimal(10), Kilogram)
-                .price(GBP, new BigDecimal(245))
+                .quantitySpec("10 kg")
+                .priceSpec("£245")
                 .createOrder();
 
         BuyOrder order2 = (BuyOrder) buy()
                 .userId("user-1")
-                .quantity(new BigDecimal(10), Kilogram)
-                .price(GBP, new BigDecimal(245))
+                .quantitySpec("10 kg")
+                .priceSpec("£245")
                 .createOrder();
 
         assertThat(order1.equals(order2), is(true));

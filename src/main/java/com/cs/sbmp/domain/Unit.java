@@ -15,7 +15,8 @@ public final class Unit {
     static final List<Unit> units = asList(Kilogram, Litre);
 
     public static Optional<Unit> findBySymbol(String symbol) {
-        return units.stream().filter(u -> u.getSymbol().equals(symbol.toLowerCase())).findAny();
+        String key = symbol.trim().toLowerCase();
+        return units.stream().filter(u -> u.getSymbol().equals(key)).findAny();
     }
 
     private final String name;

@@ -27,14 +27,14 @@ public class CreateOrder {
             return this;
         }
 
-        public OrderBuilder quantitySpec(String value) {
-            String[] tokens = value.split(" ");
+        public OrderBuilder quantitySpec(String spec) {
+            String[] tokens = spec.split(" ");
 
-            if (tokens.length != 2) { throw new RuntimeException("Incorrect data entered for quantity"); }
+            if (tokens.length != 2) { throw new RuntimeException("Incorrect spec entered for quantity"); }
 
             Optional<Unit> unit = findBySymbol(tokens[1].trim());
 
-            if (!unit.isPresent()) { throw new RuntimeException("Incorrect data entered for quantity"); }
+            if (!unit.isPresent()) { throw new RuntimeException("Incorrect spec entered for quantity"); }
 
             return quantity(new BigDecimal(tokens[0].trim()), unit.get());
         }
@@ -42,6 +42,19 @@ public class CreateOrder {
         public OrderBuilder quantity(BigDecimal amount, Unit unit) {
             this.quantity = new Quantity(amount, unit);
             return this;
+        }
+
+        public OrderBuilder priceSpec(String spec) {
+            String key = spec.trim();
+
+            if (key.length() < 2) { throw new RuntimeException("Incorrect spec entered for price"); }
+
+            String[] tokens = { spec.substring(0, 1), spec.substring(1) };
+
+            Optional<Currency> currency = Currency.findBySymbol(tokens[0]);
+            if (!currency.isPresent()) { throw new RuntimeException("Incorrect spec entered for price"); }
+
+            return price(currency.get(), new BigDecimal(tokens[1].trim()));
         }
 
         public OrderBuilder price(Currency currency, BigDecimal amount) {

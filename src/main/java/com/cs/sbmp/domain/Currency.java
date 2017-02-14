@@ -2,8 +2,22 @@ package com.cs.sbmp.domain;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
+import java.util.List;
+import java.util.Optional;
+
+import static java.util.Arrays.asList;
+
 public final class Currency implements Comparable<Currency> {
     public static Currency GBP = new Currency("Pound Sterling", "GBP", "£");
+    public static Currency USD = new Currency("US Dollar", "USD", "$");
+
+    static final List<Currency> currencies = asList(GBP, USD);
+
+    public static Optional<Currency> findBySymbol(String symbol) {
+        String key = symbol.trim();
+        return currencies.stream().filter(u -> u.getSymbol().equals(key)).findAny();
+    }
+
     private final String description;
     private final String isoCode;
     private final String symbol;
